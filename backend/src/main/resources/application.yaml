@@ -1,0 +1,22 @@
+
+spring:
+  application:
+    name: pashe
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pashe_db
+    username: pashe
+    password: ${DB_PASSWORD:pashe_local_dev}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: false
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080

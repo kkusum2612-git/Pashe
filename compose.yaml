@@ -1,0 +1,25 @@
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: pashe-postgres
+
+    environment:
+      POSTGRES_DB: pashe_db
+      POSTGRES_USER: pashe
+      POSTGRES_PASSWORD: pashe_local_dev
+
+    ports:
+      - "127.0.0.1:5432:5432"
+
+    volumes:
+      - pashe_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pashe -d pashe_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pashe_postgres_data:
