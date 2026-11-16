@@ -28,3 +28,6 @@ dist/
 
 # Uploaded user files
 uploads/
+
+# Local coding-agent context
+Agent_Context.md

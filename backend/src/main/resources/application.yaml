@@ -4,9 +4,9 @@ spring:
     name: pashe
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/pashe_db
-    username: pashe
-    password: ${DB_PASSWORD:pashe_local_dev}
+    url: jdbc:postgresql://localhost:${DB_HOST_PORT:5433}/${DB_NAME:pashe_db}
+    username: ${DB_USERNAME:pashe}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:

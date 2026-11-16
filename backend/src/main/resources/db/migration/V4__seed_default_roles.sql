@@ -1,0 +1,7 @@
+INSERT INTO roles (name)
+VALUES
+    ('USER'),
+    ('ADMIN'),
+    ('AMBULANCE_OPERATOR'),
+    ('PHARMACY_STAFF')
+ON CONFLICT (name) DO NOTHING;
