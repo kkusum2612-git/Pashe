@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.*;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.ObjectPostProcessor;
+
 
 @Configuration
 @EnableMethodSecurity
@@ -43,7 +45,18 @@ public class SecurityConfig {
         csrf.setHeaderName("X-CSRF-TOKEN");
         csrf.setCookieCustomizer(cookie -> cookie.httpOnly(true).secure(secure).sameSite("Strict"));
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .csrf(c -> c.csrfTokenRepository(csrf).csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
+            .csrf(c -> c
+                .csrfTokenRepository(csrf)
+                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                .withObjectPostProcessor(new ObjectPostProcessor<CsrfFilter>() {
+                    @Override
+                    public <O extends CsrfFilter> O postProcess(O filter) {
+                        filter.setRequireCsrfProtectionMatcher(
+                            CsrfFilter.DEFAULT_CSRF_MATCHER
+                        );
+                        return filter;
+                    }
+                }))
             .formLogin(c -> c.disable()).httpBasic(c -> c.disable()).logout(c -> c.disable())
             .requestCache(c -> c.disable())
             .authorizeHttpRequests(a -> a.requestMatchers("/api/v1/health", "/error").permitAll()
