@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.*;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.ObjectPostProcessor;
+
 
 @Configuration
 @EnableMethodSecurity
@@ -43,7 +45,18 @@ public class SecurityConfig {
         csrf.setHeaderName("X-CSRF-TOKEN");
         csrf.setCookieCustomizer(cookie -> cookie.httpOnly(true).secure(secure).sameSite("Strict"));
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .csrf(c -> c.csrfTokenRepository(csrf).csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
+            .csrf(c -> c
+                .csrfTokenRepository(csrf)
+                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                .withObjectPostProcessor(new ObjectPostProcessor<CsrfFilter>() {
+                    @Override
+                    public <O extends CsrfFilter> O postProcess(O filter) {
+                        filter.setRequireCsrfProtectionMatcher(
+                            CsrfFilter.DEFAULT_CSRF_MATCHER
+                        );
+                        return filter;
+                    }
+                }))
             .formLogin(c -> c.disable()).httpBasic(c -> c.disable()).logout(c -> c.disable())
             .requestCache(c -> c.disable())
             .authorizeHttpRequests(a -> a.requestMatchers("/api/v1/health", "/error").permitAll()
@@ -53,6 +66,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/ambulance/**").hasRole("AMBULANCE_OPERATOR")
                 .requestMatchers("/api/v1/pharmacy/**").hasRole("PHARMACY_STAFF")
+                .requestMatchers("/api/v1/blood/donor-profile").authenticated()
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint((req,res,ex) -> res.sendError(401)).accessDeniedHandler((req,res,ex) -> res.sendError(403)))
             .oauth2ResourceServer(o -> o.bearerTokenResolver(req -> {
