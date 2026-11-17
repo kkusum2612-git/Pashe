@@ -30,6 +30,16 @@ spring:
       mail.smtp.timeout: 5000
       mail.smtp.writetimeout: 5000
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+  web:
+    error:
+      include-message: never
+      include-stacktrace: never
+
 pashe:
   auth:
     jwt-secret: ${JWT_SECRET}
@@ -39,6 +49,3 @@ pashe:
 
 server:
   port: 8080
-  error:
-    include-message: never
-    include-stacktrace: never
