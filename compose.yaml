@@ -1,25 +1,33 @@
 
 services:
+  mailpit:
+    image: axllent/mailpit:v1.27
+    container_name: pashe-mailpit
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+
   postgres:
     image: postgres:17
     container_name: pashe-postgres
 
     environment:
-      POSTGRES_DB: pashe_db
-      POSTGRES_USER: pashe
-      POSTGRES_PASSWORD: pashe_local_dev
+      POSTGRES_DB: ${DB_NAME:-pashe_db}
+      POSTGRES_USER: ${DB_USERNAME:-pashe}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env or the environment}
 
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:${DB_HOST_PORT:-5433}:5432"
 
     volumes:
       - pashe_postgres_data:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pashe -d pashe_db"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
 volumes:
   pashe_postgres_data:

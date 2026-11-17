@@ -4,19 +4,41 @@ spring:
     name: pashe
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/pashe_db
-    username: pashe
-    password: ${DB_PASSWORD:pashe_local_dev}
+    url: jdbc:postgresql://localhost:${DB_HOST_PORT:5433}/${DB_NAME:pashe_db}
+    username: ${DB_USERNAME:pashe}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     open-in-view: false
 
   flyway:
     enabled: true
 
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:false}
+      mail.smtp.starttls.enable: ${SMTP_TLS:false}
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+
+pashe:
+  auth:
+    jwt-secret: ${JWT_SECRET}
+    secure-cookies: ${AUTH_SECURE_COOKIES:true}
+    frontend-url: ${FRONTEND_URL:http://localhost:5173}
+    mail-from: ${MAIL_FROM:noreply@pashe.local}
+
 server:
   port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
