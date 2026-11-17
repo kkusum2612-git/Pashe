@@ -66,6 +66,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/ambulance/**").hasRole("AMBULANCE_OPERATOR")
                 .requestMatchers("/api/v1/pharmacy/**").hasRole("PHARMACY_STAFF")
+                .requestMatchers("/api/v1/blood/donor-profile").authenticated()
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint((req,res,ex) -> res.sendError(401)).accessDeniedHandler((req,res,ex) -> res.sendError(403)))
             .oauth2ResourceServer(o -> o.bearerTokenResolver(req -> {
