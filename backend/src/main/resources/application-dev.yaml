@@ -1,0 +1,7 @@
+server:
+  address: 127.0.0.1
+pashe:
+  auth:
+    secure-cookies: false
+    seed-enabled: ${SEED_TEST_USER:false}
+    seed-password: ${SEED_TEST_PASSWORD:}

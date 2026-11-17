@@ -67,3 +67,19 @@ Flyway owns schema creation and applies versioned SQL migrations from
 and validation status. For the complete setup and live-health guide, see
 [DB_GUIDE.md](DB_GUIDE.md). For a codebase overview aimed at external coding
 agents, see [Agent_Context.md](Agent_Context.md).
+
+## Authentication tests
+
+Install frontend dependencies with `npm.cmd ci` from `frontend`, then run the
+frontend and backend authentication test suite from the repository root:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Test-Auth.ps1
+```
+
+This runs frontend auth UI/API tests, the production build and lint, then
+backend authentication integration tests against the local PostgreSQL service.
+It requires Docker Desktop; the setup helper creates `.env` only if it is
+missing. For a live
+HTTP/SMTP check against a running backend, see `scripts/Test-LocalAuth.ps1` and
+[docs/backend-auth.md](docs/backend-auth.md).
