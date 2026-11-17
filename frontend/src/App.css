@@ -229,3 +229,41 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.landing-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.landing-language {
+  min-height: 40px;
+  padding: 8px 14px;
+  background: #fff;
+  color: #2563eb;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.landing-language:hover {
+  background: #eff6ff;
+}
+
+.landing-language:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .landing-nav-actions {
+    gap: 10px;
+  }
+}
