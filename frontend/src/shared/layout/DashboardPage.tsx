@@ -11,6 +11,10 @@ const descriptions: Record<string, [string, string]> = {
     'Manage ambulance-related services.',
     'অ্যাম্বুলেন্স সংক্রান্ত সেবা পরিচালনা করুন।'
   ],
+  'verified-ambulances': [
+    'Browse verified ambulance providers.',
+    'যাচাইকৃত অ্যাম্বুলেন্স সেবা প্রদানকারীদের খুঁজুন।'
+  ],
   pharmacy: [
     'Access your pharmacy workspace.',
     'ফার্মেসি কর্মক্ষেত্রে প্রবেশ করুন।'

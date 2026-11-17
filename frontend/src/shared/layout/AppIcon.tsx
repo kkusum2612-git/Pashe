@@ -18,6 +18,7 @@ export default function AppIcon({ name, size = 20 }: {
       content = <path d="M12 3c-3 4-7 8-7 12a7 7 0 0 0 14 0c0-4-4-8-7-12Z" />;
       break;
 
+    case 'verified-ambulances':
     case 'ambulance':
       content = <>
         <path d="M3 6h12v12H3zM15 10h4l3 4v4h-7" />

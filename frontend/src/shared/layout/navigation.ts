@@ -25,15 +25,20 @@ export const navigationItems: NavigationItem[] = [
     bn: 'রক্তদান নেটওয়ার্ক',
   },
   {
+    page: 'verified-ambulances',
+    en: 'Find an Ambulance',
+    bn: 'অ্যাম্বুলেন্স খুঁজুন',
+  },
+  {
     page: 'ambulance',
     en: 'Ambulance Workspace',
-    bn: 'অ্যাম্বুলেন্স',
+    bn: 'অ্যাম্বুলেন্স কর্মক্ষেত্র',
     role: workspaceRoles.ambulance,
   },
   {
     page: 'pharmacy',
     en: 'Pharmacy Workspace',
-    bn: 'ফার্মেসি',
+    bn: 'ফার্মেসি কর্মক্ষেত্র',
     role: workspaceRoles.pharmacy,
   },
   {

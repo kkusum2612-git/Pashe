@@ -4,15 +4,19 @@ import { ApiError, canAccess, request, validPhone } from './api';
 import type { Role, User } from './api';
 import './auth.css';
 import DonorProfilePage from '../blood/donor/DonorProfilePage';
+import OperatorWorkspace from '../ambulance/profile/OperatorWorkspace';
+import AdminAmbulanceWorkspace from '../ambulance/profile/AdminAmbulanceWorkspace';
+import VerifiedAmbulanceDirectory from '../ambulance/profile/VerifiedAmbulanceDirectory';
+import '../ambulance/profile/ambulance.css';
 import AppLayout from '../shared/layout/AppLayout';
 import DashboardPage from '../shared/layout/DashboardPage';
 import { workspaceRoles } from '../shared/layout/navigation';
 import { useLanguage } from '../shared/i18n/useLanguage';
 import type { LocalizedText } from '../shared/i18n/useLanguage';
 
-type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'dashboard';
+type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'dashboard' | 'verified-ambulances';
 
-const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'dashboard'];
+const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'dashboard', 'verified-ambulances'];
 
 const rolePages: Partial<Record<Page, Role>> = workspaceRoles;
 
@@ -28,6 +32,7 @@ const titles: Record<Page, LocalizedText> = {
   pharmacy: ['Pharmacy workspace', 'ফার্মেসি কর্মক্ষেত্র'],
   donor: ['Donor profile', 'রক্তদাতার প্রোফাইল'],
   dashboard: ['Dashboard', 'ড্যাশবোর্ড'],
+  'verified-ambulances': ['Verified ambulances', 'যাচাইকৃত অ্যাম্বুলেন্স'],
 };
 
 const roleTitles: Record<Role, LocalizedText> = {
@@ -268,7 +273,12 @@ export default function AuthApp({ route }: { route: string }) {
       {busy ? t('Please wait…', 'অপেক্ষা করুন…') : t(en, bangla)}
     </button>;
 
-  const protectedPage = page === 'profile' || page === 'donor' || page === 'dashboard' || !!rolePages[page];
+  const protectedPage =
+    page === 'profile' ||
+    page === 'donor' ||
+    page === 'dashboard' ||
+    page === 'verified-ambulances' ||
+    !!rolePages[page];
 
   let content: ReactNode;
 
@@ -289,6 +299,12 @@ export default function AuthApp({ route }: { route: string }) {
       <p role="alert">{t('You do not have permission to view this workspace.', 'এই কর্মক্ষেত্র দেখার অনুমতি আপনার নেই।')}</p>
       <a href="#/auth/profile">{t('Back to profile', 'প্রোফাইলে ফিরুন')}</a>
     </>;
+  } else if (page === 'ambulance' && user) {
+    content = <OperatorWorkspace key={user.id} offline={offline} />;
+  } else if (page === 'admin' && user) {
+    content = <AdminAmbulanceWorkspace key={user.id} offline={offline} />;
+  } else if (page === 'verified-ambulances' && user) {
+    content = <VerifiedAmbulanceDirectory key={user.id} offline={offline} />;
   } else if (rolePages[page]) {
     content = <p>{t('Your role has been verified. Workspace features are coming soon.', 'আপনার ভূমিকা যাচাই হয়েছে। কর্মক্ষেত্রের সুবিধা শীঘ্রই আসছে।')}</p>;
   } else if (page === 'dashboard' && user) {
@@ -430,7 +446,7 @@ export default function AuthApp({ route }: { route: string }) {
         offline={offline}
       >
         <section
-          className={`auth-card app-content-card${page === 'dashboard' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
+          className={`auth-card app-content-card${page === 'dashboard' || page === 'verified-ambulances' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
           aria-labelledby="page-title"
         >
           <h1 id="page-title">{t(...titles[page])}</h1>
@@ -487,6 +503,7 @@ export default function AuthApp({ route }: { route: string }) {
           {user?.emailVerified && <>
             <a href="#/auth/dashboard">{t('Dashboard', 'ড্যাশবোর্ড')}</a>
             <a href="#/auth/donor">{t('Blood Network', 'রক্তদান নেটওয়ার্ক')}</a>
+            <a href="#/auth/verified-ambulances">{t('Verified Ambulances', 'যাচাইকৃত অ্যাম্বুলেন্স')}</a>
           </>}
 
           {user && <>
