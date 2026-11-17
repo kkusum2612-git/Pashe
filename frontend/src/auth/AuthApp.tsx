@@ -3,15 +3,17 @@ import type { FormEvent, ReactNode } from 'react';
 import { ApiError, canAccess, request, validPhone } from './api';
 import type { Role, User } from './api';
 import './auth.css';
+import DonorProfilePage from '../blood/donor/DonorProfilePage';
 
-type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy';
-const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy'];
+type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor';
+const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor'];
 const rolePages: Partial<Record<Page, Role>> = { admin: 'ADMIN', ambulance: 'AMBULANCE_OPERATOR', pharmacy: 'PHARMACY_STAFF' };
 const titles: Record<Page, [string, string]> = {
   login: ['Welcome back', 'আবার স্বাগতম'], register: ['Create your account', 'আপনার অ্যাকাউন্ট তৈরি করুন'],
   verify: ['Verify your email', 'ইমেইল যাচাই করুন'], forgot: ['Forgot your password?', 'পাসওয়ার্ড ভুলে গেছেন?'],
   reset: ['Choose a new password', 'নতুন পাসওয়ার্ড দিন'], profile: ['Your profile', 'আপনার প্রোফাইল'],
   admin: ['Administration', 'প্রশাসন'], ambulance: ['Ambulance workspace', 'অ্যাম্বুলেন্স কর্মক্ষেত্র'], pharmacy: ['Pharmacy workspace', 'ফার্মেসি কর্মক্ষেত্র'],
+  donor: ['Donor profile', 'রক্তদাতার প্রোফাইল'],
 };
 
 export default function AuthApp({ route }: { route: string }) {
@@ -120,13 +122,16 @@ export default function AuthApp({ route }: { route: string }) {
     <label className="auth-show"><input type="checkbox" checked={showPassword} onChange={e => setShowPassword(e.target.checked)} />{t('Show password', 'পাসওয়ার্ড দেখুন')}</label>
   </>;
   const button = (en: string, bangla: string) => <button className="auth-primary" type="submit" disabled={busy || offline}>{busy ? t('Please wait…', 'অপেক্ষা করুন…') : label(en, bangla)}</button>;
-  const protectedPage = page === 'profile' || !!rolePages[page];
+  const protectedPage = page === 'profile' || page === 'donor' || !!rolePages[page];
   let content: ReactNode;
   if (loading && protectedPage) content = <p role="status">{t('Checking your session…', 'আপনার সেশন যাচাই হচ্ছে…')}</p>;
   else if (protectedPage && !user) content = <><p>{t('Sign in to continue to your account.', 'অ্যাকাউন্ট দেখতে প্রবেশ করুন।')}</p><a className="auth-primary" href="#/auth/login">{label('Sign in', 'প্রবেশ করুন')}</a></>;
   else if (protectedPage && user && !user.emailVerified) content = <><p>{t('Verify your email before continuing.', 'চালিয়ে যেতে ইমেইল যাচাই করুন।')}</p><a href="#/auth/verify">{label('Verify email', 'ইমেইল যাচাই করুন')}</a></>;
   else if (rolePages[page] && !canAccess(user, [rolePages[page]!])) content = <><p role="alert">{t('You do not have permission to view this workspace.', 'এই কর্মক্ষেত্র দেখার অনুমতি আপনার নেই।')}</p><a href="#/auth/profile">{label('Back to profile', 'প্রোফাইলে ফিরুন')}</a></>;
   else if (rolePages[page]) content = <p>{t('Your role has been verified. Workspace features are coming soon.', 'আপনার ভূমিকা যাচাই হয়েছে। কর্মক্ষেত্রের সুবিধা শীঘ্রই আসছে।')}</p>;
+  else if (page === 'donor' && user) {
+    content = <DonorProfilePage key={user.id} bn={bn} offline={offline} />;
+  }
   else content = <form key={page + (user?.id || '')} onSubmit={submit}><fieldset disabled={busy || offline}>
     {page === 'register' && field('fullName', 'Full name', 'পুরো নাম', 'text', '', 'name')}
     {['login', 'register', 'forgot'].includes(page) && field('email', 'Email', 'ইমেইল', 'email', '', 'email')}
@@ -159,7 +164,7 @@ export default function AuthApp({ route }: { route: string }) {
     {page === 'profile' && button('Save changes', 'পরিবর্তন সংরক্ষণ করুন')}
     </fieldset></form>;
 
-  return <div className="auth-shell" lang={bn ? 'bn' : 'en'}>
+  return <div className={`auth-shell${page === 'donor' ? ' donor-shell' : ''}`} lang={bn ? 'bn' : 'en'}>
     <header className="auth-header"><a className="auth-brand" href="#/">✚ Pashe <span lang="bn">পাশে</span></a><button className="auth-language" onClick={() => setBn(!bn)}>{bn ? 'English' : 'বাংলা'}</button></header>
     <main className="auth-layout">
       <aside className="auth-intro"><span className="auth-eyebrow">{t('YOUR CARE COMPANION', 'আপনার যত্নের সঙ্গী')}</span><h1>{t('A little closer.','আরও একটু কাছে।')}<br />{t('A little more cared for.', 'আরও একটু যত্নে।')}</h1><p>{t('One account to stay connected to the people and care that matter to you.', 'প্রিয় মানুষ ও প্রয়োজনীয় যত্নের সাথে যুক্ত থাকতে একটি অ্যাকাউন্ট।')}</p><div className="auth-intro-note">✚ <span>{t('Together, we are Pashe.', 'একসাথে, আমরা পাশে।')}</span></div></aside>
@@ -172,6 +177,9 @@ export default function AuthApp({ route }: { route: string }) {
           {page === 'login' && <><a href="#/auth/forgot">{label('Forgot password?', 'পাসওয়ার্ড ভুলে গেছেন?')}</a><a href="#/auth/register">{label('Create an account', 'অ্যাকাউন্ট তৈরি করুন')}</a></>}
           {page === 'login' && <a href="#/auth/verify">{label('Resend verification email', 'যাচাই ইমেইল আবার পাঠান')}</a>}
           {!['login', 'profile'].includes(page) && <a href="#/auth/login">{label('Back to sign in', 'প্রবেশ পাতায় ফিরুন')}</a>}
+          {user?.emailVerified && (
+            <a href="#/auth/donor">{label('Blood Network', 'রক্তদান নেটওয়ার্ক')}</a>
+          )}
           {user && <><a href="#/auth/profile">{label('My profile', 'আমার প্রোফাইল')}</a>{Object.entries(rolePages).filter(([, role]) => canAccess(user, [role])).map(([path]) => <a key={path} href={`#/auth/${path}`}>{titles[path as Page][bn ? 1 : 0]}</a>)}
             <button disabled={busy || offline} onClick={() => void action(async () => { await request('/auth/logout', 'POST'); setUser(null); location.hash = '/auth/login'; setNotice(t('You have signed out.', 'আপনি লগআউট করেছেন।')); })}>{label('Sign out', 'বের হন')}</button></>}
         </nav>
