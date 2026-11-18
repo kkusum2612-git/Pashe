@@ -1,153 +1,74 @@
-/* Donor page layout */
-
-.auth-shell.donor-shell {
-    min-height: 100dvh;
+.donor-form {
+  container-type: inline-size;
 }
-
-.donor-shell .auth-header {
-    max-width: 840px;
-    padding: 20px 16px;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.donor-shell .auth-layout {
-    display: block;
-    max-width: 840px;
-    margin: 24px auto;
-    padding: 0 16px;
-}
-
-/* Remove the login promotional panel */
-
-.donor-shell .auth-intro {
-    display: none;
-}
-
-/* Responsive donor card */
-
-.donor-shell .auth-card {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    padding: clamp(20px, 4vw, 36px);
-    border-radius: 20px;
-}
-
-.donor-shell .auth-card h2 {
-    font-size: clamp(24px, 3vw, 32px);
-    margin: 12px 0 8px;
-}
-
-.donor-shell .auth-subtitle {
-    margin-bottom: 20px;
-}
-
-/* Responsive form */
 
 .donor-form fieldset {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
 }
 
 .donor-form .auth-field {
-    margin: 0;
-    min-width: 0;
+  margin: 0;
+  min-width: 0;
 }
 
 .donor-form .auth-field input,
 .donor-form .auth-field select {
-    box-sizing: border-box;
-    display: block;
-    width: 100%;
-    min-width: 0;
-    min-height: 52px;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    color: #0f172a;
-    border-radius: 11px;
-    padding: 12px 14px;
-    margin-top: 9px;
-    font: inherit;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #0f172a;
+  border-radius: 11px;
+  padding: 12px 14px;
+  margin-top: 9px;
+  font: inherit;
 }
 
 .donor-form fieldset > .auth-hint {
-    margin: 0;
+  margin: 0;
 }
 
-/* Availability */
-
 .donor-availability {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    background: #eff6ff;
-    border: 1px solid #dbeafe;
-    border-radius: 12px;
-    color: #1e40af;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  color: #1e40af;
+  cursor: pointer;
 }
 
 .donor-availability input {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    accent-color: #2563eb;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: #2563eb;
 }
 
-.donor-shell .donor-form .auth-primary {
-    margin-top: 0;
-    min-height: 52px;
+.auth-shell .donor-form .auth-primary {
+  margin-top: 0;
+  min-height: 52px;
 }
 
-/* Feature navigation */
+/* Adapt to available content width, not screen width. */
 
-.donor-shell .auth-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #e2e8f0;
+@container (min-width: 560px) {
+  .donor-form fieldset {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .donor-form fieldset > .auth-field:nth-of-type(3),
+  .donor-form fieldset > .auth-hint,
+  .donor-availability,
+  .donor-form .auth-primary {
+    grid-column: 1 / -1;
+  }
 }
 
-/* Tablet and desktop */
-
-@media (min-width: 700px) {
-    .donor-form fieldset {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .donor-form fieldset > .auth-field:nth-of-type(3),
-    .donor-form fieldset > .auth-hint,
-    .donor-availability,
-    .donor-form .auth-primary {
-        grid-column: 1 / -1;
-    }
-}
-
-/* Small screens */
-
-@media (max-width: 480px) {
-    .donor-shell .auth-layout {
-        margin: 12px auto;
-        padding: 0 12px;
-    }
-
-    .donor-shell .auth-card {
-        padding: 20px 16px;
-        border-radius: 14px;
-    }
-
-    .donor-shell .auth-links {
-        flex-direction: column;
-    }
-
-    .donor-shell .auth-links button {
-        width: 100%;
-    }
-}

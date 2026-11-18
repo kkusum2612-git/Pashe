@@ -1,0 +1,728 @@
+/* Shared Pashe design tokens */
+
+:root {
+  --pashe-primary: #2563eb;
+  --pashe-primary-dark: #1d4ed8;
+  --pashe-primary-light: #eff6ff;
+
+  --pashe-background: #f6f8fb;
+  --pashe-surface: #ffffff;
+  --pashe-text: #0f172a;
+  --pashe-muted: #64748b;
+  --pashe-border: #e2e8f0;
+  --pashe-danger: #b91c1c;
+
+  --pashe-radius: 12px;
+  --pashe-sidebar-width: 240px;
+  --pashe-header-height: 64px;
+}
+
+/* Application shell */
+
+.app-shell {
+  min-height: 100dvh;
+  background: var(--pashe-background);
+  color: var(--pashe-text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+.app-shell[lang="bn"] {
+  font-family: "Noto Sans Bengali", "Hind Siliguri", system-ui, sans-serif;
+}
+
+.app-workspace {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-width: 0;
+}
+
+/* Header */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: var(--pashe-header-height);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--pashe-surface);
+  border-bottom: 1px solid var(--pashe-border);
+}
+
+.app-header-left,
+.app-header-actions,
+.app-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.app-breadcrumb {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  color: var(--pashe-muted);
+  font-size: 13px;
+}
+
+.app-breadcrumb strong {
+  color: var(--pashe-text);
+  font-weight: 600;
+}
+
+/* Branding */
+
+.app-shell .app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--pashe-text);
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -.6px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-brand-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: var(--pashe-primary);
+  border-radius: 10px;
+}
+
+/* Header controls */
+
+.app-icon-button,
+.app-language-button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--pashe-surface);
+  border: 1px solid var(--pashe-border);
+  border-radius: 8px;
+  color: var(--pashe-text);
+  cursor: pointer;
+}
+
+.app-icon-button {
+  width: 40px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.app-language-button {
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.app-icon-button:hover,
+.app-language-button:hover {
+  background: var(--pashe-primary-light);
+  color: var(--pashe-primary);
+}
+
+.app-profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--pashe-primary-light);
+  color: var(--pashe-primary);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Account dropdown */
+
+.app-account-menu {
+  position: relative;
+}
+
+.app-account-menu summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 8px;
+}
+
+.app-account-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.app-account-name {
+  display: none;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.app-account-dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  width: min(280px, 85vw);
+  background: var(--pashe-surface);
+  border: 1px solid var(--pashe-border);
+  border-radius: var(--pashe-radius);
+  box-shadow: 0 12px 32px #0f172a14;
+  padding: 6px;
+}
+
+.app-account-info {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border-bottom: 1px solid var(--pashe-border);
+}
+
+.app-account-info span {
+  color: var(--pashe-muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.app-shell .app-account-dropdown a,
+.app-account-dropdown button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--pashe-text);
+  text-decoration: none;
+  text-align: left;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.app-account-dropdown a:hover,
+.app-account-dropdown button:hover {
+  background: var(--pashe-background);
+}
+
+/* Sidebar */
+
+.app-sidebar {
+  display: none;
+  background: var(--pashe-surface);
+  border-right: 1px solid var(--pashe-border);
+}
+
+.app-sidebar-brand {
+  height: var(--pashe-header-height);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--pashe-border);
+}
+
+.app-navigation {
+  flex: 1;
+  padding: 24px 12px;
+  overflow-y: auto;
+}
+
+.app-nav-heading {
+  margin: 0 12px 14px;
+  color: var(--pashe-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.app-navigation nav {
+  display: grid;
+  gap: 5px;
+}
+
+.app-shell .app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.app-nav-link svg {
+  flex-shrink: 0;
+}
+
+.app-shell .app-nav-link:hover {
+  color: var(--pashe-primary);
+  background: #f1f5f9;
+  text-decoration: none;
+}
+
+.app-shell .app-nav-active {
+  color: var(--pashe-primary);
+  background: var(--pashe-primary-light);
+  font-weight: 650;
+}
+
+.app-sidebar-bottom {
+  padding: 16px 12px;
+  border-top: 1px solid var(--pashe-border);
+}
+
+.app-sign-out {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--pashe-danger);
+  text-align: left;
+  cursor: pointer;
+}
+
+.app-sign-out:hover {
+  background: #fef2f2;
+}
+
+/* Main content */
+
+.app-main {
+  flex: 1;
+  padding: 32px;
+}
+
+.app-content {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.app-shell .app-content-card {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px;
+  background: var(--pashe-surface);
+  border: 1px solid var(--pashe-border);
+  border-radius: var(--pashe-radius);
+  box-shadow: 0 2px 6px #0f172a04;
+}
+
+.app-shell .app-content-card-wide {
+  max-width: 1120px;
+}
+
+.app-content-card h1 {
+  margin: 0 0 24px;
+  font-size: clamp(24px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -.6px;
+}
+
+.app-shell .auth-field input,
+.app-shell .auth-field select {
+  min-height: 46px;
+  border-radius: 8px;
+}
+
+.app-shell .auth-primary {
+  min-height: 46px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.app-footer {
+  padding: 20px 16px;
+  text-align: center;
+  color: var(--pashe-muted);
+  font-size: 12px;
+}
+
+/* Dashboard */
+
+.app-welcome {
+  padding: 24px;
+  background: var(--pashe-primary-light);
+  border: 1px solid #dbeafe;
+  border-radius: var(--pashe-radius);
+  margin-bottom: 28px;
+}
+
+.app-welcome h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.app-welcome p {
+  margin: 0;
+  color: var(--pashe-muted);
+}
+
+.app-dashboard-heading {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+
+.app-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 240px), 1fr)
+  );
+  gap: 16px;
+}
+
+.app-shell .app-service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--pashe-border);
+  border-radius: var(--pashe-radius);
+  background: var(--pashe-surface);
+  color: var(--pashe-text);
+  text-decoration: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.app-service-card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 4px 12px #2563eb0d;
+}
+
+.app-service-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--pashe-primary-light);
+  color: var(--pashe-primary);
+}
+
+.app-service-card strong {
+  font-size: 16px;
+}
+
+.app-service-card p {
+  margin: 0;
+  color: var(--pashe-muted);
+  font-size: 13px;
+}
+
+.app-service-card .app-service-arrow {
+  margin-top: auto;
+  color: var(--pashe-primary);
+}
+
+/* Mobile navigation drawer */
+
+.app-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  margin: 0;
+  width: min(300px, 86vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: var(--pashe-surface);
+  color: var(--pashe-text);
+}
+
+.app-drawer[open] {
+  animation: app-drawer-enter .2s ease-out;
+}
+
+.app-drawer::backdrop {
+  background: #0f172a66;
+}
+
+.app-drawer-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-drawer-header {
+  min-height: var(--pashe-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--pashe-border);
+}
+
+body:has(.app-drawer[open]) {
+  overflow: hidden;
+}
+
+@keyframes app-drawer-enter {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Desktop */
+
+@media (min-width: 1024px) {
+  .app-shell {
+    display: grid;
+    grid-template-columns: var(--pashe-sidebar-width) minmax(0, 1fr);
+  }
+
+  .app-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-mobile-brand {
+    display: none;
+  }
+
+  .app-breadcrumb {
+    display: flex;
+  }
+
+  .app-account-name {
+    display: block;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .app-header-actions,
+  .app-mobile-brand {
+    gap: 8px;
+  }
+
+  .app-shell .app-brand {
+    font-size: 18px;
+    gap: 6px;
+  }
+
+  .app-brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .app-language-button {
+    padding: 0 8px;
+  }
+
+  .app-language-button svg {
+    display: none;
+  }
+
+  .app-account-menu summary > svg {
+    display: none;
+  }
+
+  .app-main {
+    padding: 16px;
+  }
+
+  .app-shell .app-content-card {
+    padding: 20px;
+  }
+
+  .app-welcome {
+    padding: 18px;
+  }
+
+  .app-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-drawer,
+  .app-service-card {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* Personal profile */
+
+.app-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: var(--pashe-background);
+  border: 1px solid var(--pashe-border);
+  border-radius: var(--pashe-radius);
+}
+
+.app-profile-summary .auth-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.app-profile-identity {
+  min-width: 0;
+}
+
+.app-profile-identity h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  letter-spacing: -.3px;
+  overflow-wrap: anywhere;
+}
+
+.app-profile-email {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--pashe-muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.app-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.app-profile-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.app-profile-roles .auth-badge {
+  margin: 0;
+}
+
+.app-profile-section {
+  margin-top: 28px;
+}
+
+.app-profile-section h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -.2px;
+}
+
+.app-profile-description {
+  margin: 0 0 20px;
+  color: var(--pashe-muted);
+  font-size: 13px;
+}
+
+.app-profile-fields {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 230px), 1fr)
+  );
+  gap: 20px;
+}
+
+.app-profile-fields .auth-field {
+  margin: 0;
+  font-size: 14px;
+}
+
+.app-profile-fields input {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.app-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--pashe-border);
+}
+
+.app-shell .app-profile-actions .auth-primary {
+  width: auto;
+  min-width: 140px;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .app-profile-summary {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .app-profile-summary .auth-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .app-profile-identity h2 {
+    font-size: 17px;
+  }
+
+  .app-profile-fields {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .app-shell .app-profile-actions .auth-primary {
+    width: 100%;
+  }
+}

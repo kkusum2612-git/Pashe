@@ -1,5 +1,5 @@
-
 import { useEffect, useState } from 'react';
+import { useLanguage } from './shared/i18n/useLanguage';
 import './App.css';
 
 type ConnectionStatus = 'checking' | 'connected' | 'disconnected';
@@ -11,6 +11,8 @@ interface HealthResponse {
 }
 
 function Landing() {
+  const { bn, t, toggleLanguage } = useLanguage();
+
   const [connectionStatus, setConnectionStatus] =
     useState<ConnectionStatus>('checking');
 
@@ -50,52 +52,83 @@ function Landing() {
 
   function retryConnection() {
     setConnectionStatus('checking');
-    setRefreshKey((previous) => previous + 1);
+    setRefreshKey(previous => previous + 1);
   }
 
   return (
-    <div className="app">
+    <div className="app" lang={bn ? 'bn' : 'en'}>
       <header className="navbar">
         <div className="brand">
           <span className="brand-icon">+</span>
-          <span>Pashe</span>
+          <span>{t('Pashe', 'পাশে')}</span>
         </div>
 
-        <a href="#/auth/login">Sign in / প্রবেশ করুন</a>
+        <div className="landing-nav-actions">
+          <button
+            type="button"
+            className="landing-language"
+            onClick={toggleLanguage}
+            lang={bn ? 'en' : 'bn'}
+          >
+            {bn ? 'English' : 'বাংলা'}
+          </button>
+
+          <a href="#/auth/login">
+            {t('Sign in', 'প্রবেশ করুন')}
+          </a>
+        </div>
       </header>
 
       <main className="main-content">
         <section className="welcome-section">
-          <span className="eyebrow">WELCOME TO PASHE</span>
+          <span className="eyebrow">
+            {t('WELCOME TO PASHE', 'পাশে আপনাকে স্বাগতম')}
+          </span>
 
-          <h1>Care is better together.</h1>
+          <h1>
+            {t('Care is better together.', 'একসাথে যত্ন আরও সুন্দর।')}
+          </h1>
 
           <p className="welcome-description">
-            Your companion for emergency assistance,
-            trusted connections, and everyday healthcare.
+            {t(
+              'Your companion for emergency assistance, trusted connections, and everyday healthcare.',
+              'জরুরি সহায়তা, বিশ্বস্ত যোগাযোগ এবং দৈনন্দিন স্বাস্থ্যসেবায় আপনার সঙ্গী।'
+            )}
           </p>
         </section>
 
         <section className="status-card">
-          <h2>System Connection</h2>
+          <h2>{t('System Connection', 'সিস্টেম সংযোগ')}</h2>
 
           <p className="status-description">
-            Checking communication with the Pashe backend.
+            {t(
+              'Checking communication with the Pashe backend.',
+              'পাশে সিস্টেমের সাথে সংযোগ যাচাই করা হচ্ছে।'
+            )}
           </p>
 
-          <div className={`status-box ${connectionStatus}`}>
+          <div
+            className={`status-box ${connectionStatus}`}
+            role="status"
+          >
             <span className="status-dot"></span>
 
             {connectionStatus === 'checking' && (
-              <span>Checking backend connection...</span>
+              <span>
+                {t('Checking backend connection...', 'সংযোগ যাচাই করা হচ্ছে...')}
+              </span>
             )}
 
             {connectionStatus === 'connected' && (
-              <span>Backend Connected Successfully!</span>
+              <span>
+                {t('Backend Connected Successfully!', 'সফলভাবে সংযোগ স্থাপিত হয়েছে!')}
+              </span>
             )}
 
             {connectionStatus === 'disconnected' && (
-              <span>Backend Connection Failed</span>
+              <span>
+                {t('Backend Connection Failed', 'সংযোগ স্থাপন করা যায়নি')}
+              </span>
             )}
           </div>
 
@@ -104,43 +137,65 @@ function Landing() {
             onClick={retryConnection}
             disabled={connectionStatus === 'checking'}
           >
-            Check Connection Again
+            {t('Check Connection Again', 'আবার সংযোগ যাচাই করুন')}
           </button>
         </section>
 
         <section className="features-section">
-          <h2>What Pashe Will Offer</h2>
+          <h2>
+            {t('What Pashe Will Offer', 'পাশের সম্ভাব্য সেবাসমূহ')}
+          </h2>
 
           <div className="feature-grid">
             <div className="feature-card">
               <span className="feature-icon">🆘</span>
-              <h3>Guardian SOS</h3>
-              <p>Emergency support from your trusted circle.</p>
+              <h3>{t('Guardian SOS', 'জরুরি সহায়তা')}</h3>
+              <p>
+                {t(
+                  'Emergency support from your trusted circle.',
+                  'বিশ্বস্ত ব্যক্তিদের কাছ থেকে জরুরি সহায়তা।'
+                )}
+              </p>
             </div>
 
             <div className="feature-card">
               <span className="feature-icon">🚑</span>
-              <h3>Ambulance</h3>
-              <p>Find emergency transport with fair fares.</p>
+              <h3>{t('Ambulance', 'অ্যাম্বুলেন্স')}</h3>
+              <p>
+                {t(
+                  'Find emergency transport with fair fares.',
+                  'ন্যায্য ভাড়ায় জরুরি পরিবহন খুঁজুন।'
+                )}
+              </p>
             </div>
 
             <div className="feature-card">
               <span className="feature-icon">🩸</span>
-              <h3>Blood Network</h3>
-              <p>Connect blood donors with people in need.</p>
+              <h3>{t('Blood Network', 'রক্তদান নেটওয়ার্ক')}</h3>
+              <p>
+                {t(
+                  'Connect blood donors with people in need.',
+                  'রক্তদাতাদের সাথে রক্তের প্রয়োজন থাকা ব্যক্তিদের সংযুক্ত করুন।'
+                )}
+              </p>
             </div>
 
             <div className="feature-card">
               <span className="feature-icon">💊</span>
-              <h3>Medicine Care</h3>
-              <p>Manage medicines, reminders, and requests.</p>
+              <h3>{t('Medicine Care', 'ওষুধ সেবা')}</h3>
+              <p>
+                {t(
+                  'Manage medicines, reminders, and requests.',
+                  'ওষুধ, স্মরণবার্তা এবং অনুরোধ পরিচালনা করুন।'
+                )}
+              </p>
             </div>
           </div>
         </section>
       </main>
 
       <footer className="footer">
-        Pashe • Your care companion
+        {t('Pashe • Your care companion', 'পাশে • আপনার যত্নের সঙ্গী')}
       </footer>
     </div>
   );

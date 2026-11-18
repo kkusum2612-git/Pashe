@@ -179,7 +179,7 @@ export default function DonorProfilePage({
             value={area}
             onChange={event => setArea(event.target.value)}
             maxLength={120}
-            placeholder="Mirpur, Dhaka"
+            placeholder={t('Mirpur, Dhaka', 'মিরপুর, ঢাকা')}
             required
           />
         </label>

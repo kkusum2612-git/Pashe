@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useEffect, useState } from 'react';
@@ -61,7 +61,9 @@ describe('authentication screens', () => {
     await user.click(screen.getByRole('button', { name: /Sign in/ }));
 
     expect(await screen.findByText('Your profile')).toBeTruthy();
-    expect(screen.getByText('tester@example.test')).toBeTruthy();
+    expect(
+      within(screen.getByRole('main')).getByText('tester@example.test')
+    ).toBeTruthy();
     const loginCall = fetchMock.mock.calls.find(([url]) => url.endsWith('/auth/login'));
     expect(loginCall?.[1]?.method).toBe('POST');
     expect(JSON.parse(String(loginCall?.[1]?.body))).toEqual({
