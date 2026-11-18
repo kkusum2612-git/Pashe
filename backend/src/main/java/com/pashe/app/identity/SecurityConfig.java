@@ -65,6 +65,14 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/users/me", "/api/v1/ws").authenticated()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers(org.springframework.http.HttpMethod.GET,"/api/v1/ambulance/verified").authenticated()
+                .requestMatchers(
+                        org.springframework.http.HttpMethod.GET,
+                        "/api/v1/ambulance/fare/locations"
+                    ).authenticated()
+                    .requestMatchers(
+                        org.springframework.http.HttpMethod.POST,
+                        "/api/v1/ambulance/fare/estimate"
+                    ).authenticated()
                 .requestMatchers("/api/v1/ambulance/**").hasRole("AMBULANCE_OPERATOR")
                 .requestMatchers("/api/v1/pharmacy/**").hasRole("PHARMACY_STAFF")
                 .requestMatchers("/api/v1/blood/donor-profile").authenticated()
