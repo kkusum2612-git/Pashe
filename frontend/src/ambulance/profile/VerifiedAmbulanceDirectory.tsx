@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ambulanceApi } from './api';
 import type { VerifiedAmbulance } from './types';
 import './ambulance.css';
+import FareEstimator from '../fare/FareEstimator';
 
 export default function VerifiedAmbulanceDirectory({
   offline = false
@@ -61,7 +62,9 @@ export default function VerifiedAmbulanceDirectory({
   });
 
   return (
-    <div className="am-workspace">
+  <div className="am-workspace">
+
+    <FareEstimator offline={offline} />
       <div className="am-heading">
         <div>
           <h3>Verified ambulance directory</h3>
