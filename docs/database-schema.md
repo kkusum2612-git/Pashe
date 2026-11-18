@@ -6,6 +6,21 @@ Application code is expected to generate UUIDs for user and token IDs.
 
 ## Tables
 
+### Care Circle and self-SOS
+
+`V20261118000100` adds `care_circle_memberships` and `care_circle_events` for
+two-party consent. A recipient/invitee pair has at most one pending or active
+relationship. History records the acting user and transition time.
+
+`V20261118000500` adds `self_sos_requests` (durable countdown, idempotency key and
+linked incident), `self_sos_incidents` (recipient, open/resolved timestamps and
+optional pickup address) and `self_sos_locations` (one latest point per user).
+Partial unique indexes allow only one countdown and one open incident per recipient.
+User references are restrictive so care history cannot be silently erased.
+
+The presentation launcher uses the separate `pashe_sos_demo` schema. See the
+[presentation guide](care-circle-sos-demo.md) for setup and API details.
+
 ### `users`
 
 Stores shared application identity and password hashes. `email` is unique

@@ -5,6 +5,12 @@ export default function AppIcon({ name, size = 20 }: {
   let content;
 
   switch (name) {
+    case 'guardian':
+      content = <>
+        <path d="M12 3 3 7v5c0 5 4 8 9 10 5-2 9-5 9-10V7l-9-4Z" />
+        <path d="M12 8v8M8 12h8" />
+      </>;
+      break;
     case 'dashboard':
       content = <>
         <rect x="3" y="3" width="7" height="7" rx="1" />

@@ -1,0 +1,22 @@
+.guardian { max-width: 1100px; margin: auto; padding: 20px; color: #0f172a; }
+.guardian header, .g-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0; }
+.guardian a { color: #2563eb; padding: 12px 0; }
+.guardian h1 { font-size: clamp(28px,5vw,44px); }
+.guardian h1 small, .guardian h2 small { display: block; color: #64748b; font-size: 16px; font-weight: normal; }
+.guardian p { line-height: 1.6; overflow-wrap: anywhere; }
+.guardian form, .g-card { background: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px; margin: 16px 0; }
+.guardian fieldset { border: 0; padding: 0; min-width: 0; }
+.guardian label { display: block; margin: 16px 0; }
+.guardian input:not([type=checkbox]), .guardian select, .guardian textarea { width: 100%; padding: 14px; min-height: 48px; border: 1px solid #e2e8f0; border-radius: 10px; font: inherit; margin-top: 8px; }
+.guardian button { min-height: 48px; padding: 12px 18px; border: 1px solid #e2e8f0; border-radius: 10px; background: #2563eb; color: #fff; font: inherit; cursor: pointer; }
+.guardian button:disabled { opacity: .5; cursor: not-allowed; }
+.guardian :focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
+.guardian [role=alert] { background: #fff1f2; color: #9f1239; padding: 16px; border-radius: 10px; }
+.g-check { display: flex !important; gap: 10px; align-items: center; min-height: 48px; }
+.g-check input { width: 20px; height: 20px; }
+.guardian .g-sos { display: block; margin: 24px auto; width: 220px; height: 220px; border-radius: 50%; background: #be123c; color: #fff; border: 10px solid #ffe4e6; font-size: 54px; font-weight: bold; box-shadow: 0 0 0 8px #fff1f2; }
+.g-sos small { display: block; font-size: 16px; }
+.g-warning { border-left: 4px solid #be123c; background: #fff1f2; padding: 16px; }
+.g-countdown { text-align: center; background: #fff; border: 2px solid #be123c; border-radius: 20px; padding: 32px; }
+.g-countdown strong { display: block; font-size: 80px; color: #be123c; margin: 20px; }
+.g-map { height: 300px; border: 1px solid #e2e8f0; border-radius: 12px; z-index: 0; }
