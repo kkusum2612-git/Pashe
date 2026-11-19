@@ -25,6 +25,11 @@ export const navigationItems: NavigationItem[] = [
     bn: 'রক্তদান নেটওয়ার্ক',
   },
   {
+    page: 'blood-requests',
+    en: 'Blood Requests',
+    bn: 'রক্তের অনুরোধ',
+  },
+  {
     page: 'verified-ambulances',
     en: 'Find an Ambulance',
     bn: 'অ্যাম্বুলেন্স খুঁজুন',
