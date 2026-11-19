@@ -4,6 +4,7 @@ import { ApiError, canAccess, request, validPhone } from './api';
 import type { Role, User } from './api';
 import './auth.css';
 import DonorProfilePage from '../blood/donor/DonorProfilePage';
+import BloodRequestPage from '../blood/request/BloodRequestPage';
 import OperatorWorkspace from '../ambulance/profile/OperatorWorkspace';
 import AdminAmbulanceWorkspace from '../ambulance/profile/AdminAmbulanceWorkspace';
 import VerifiedAmbulanceDirectory from '../ambulance/profile/VerifiedAmbulanceDirectory';
@@ -14,9 +15,9 @@ import { workspaceRoles } from '../shared/layout/navigation';
 import { useLanguage } from '../shared/i18n/useLanguage';
 import type { LocalizedText } from '../shared/i18n/useLanguage';
 
-type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'dashboard' | 'verified-ambulances';
+type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'blood-requests' | 'dashboard' | 'verified-ambulances';
 
-const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'dashboard', 'verified-ambulances'];
+const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'blood-requests', 'dashboard', 'verified-ambulances'];
 
 const rolePages: Partial<Record<Page, Role>> = workspaceRoles;
 
@@ -31,6 +32,7 @@ const titles: Record<Page, LocalizedText> = {
   ambulance: ['Ambulance workspace', 'অ্যাম্বুলেন্স কর্মক্ষেত্র'],
   pharmacy: ['Pharmacy workspace', 'ফার্মেসি কর্মক্ষেত্র'],
   donor: ['Donor profile', 'রক্তদাতার প্রোফাইল'],
+  'blood-requests': ['Blood requests', '\u09b0\u0995\u09cd\u09a4\u09c7\u09b0 \u0985\u09a8\u09c1\u09b0\u09cb\u09a7'],
   dashboard: ['Dashboard', 'ড্যাশবোর্ড'],
   'verified-ambulances': ['Verified ambulances', 'যাচাইকৃত অ্যাম্বুলেন্স'],
 };
@@ -276,6 +278,7 @@ export default function AuthApp({ route }: { route: string }) {
   const protectedPage =
     page === 'profile' ||
     page === 'donor' ||
+    page === 'blood-requests' ||
     page === 'dashboard' ||
     page === 'verified-ambulances' ||
     !!rolePages[page];
@@ -309,6 +312,8 @@ export default function AuthApp({ route }: { route: string }) {
     content = <p>{t('Your role has been verified. Workspace features are coming soon.', 'আপনার ভূমিকা যাচাই হয়েছে। কর্মক্ষেত্রের সুবিধা শীঘ্রই আসছে।')}</p>;
   } else if (page === 'dashboard' && user) {
     content = <DashboardPage user={user} bn={bn} />;
+  } else if (page === 'blood-requests' && user) {
+    content = <BloodRequestPage key={user.id} bn={bn} offline={offline} />;
   } else if (page === 'donor' && user) {
     content = <DonorProfilePage key={user.id} bn={bn} offline={offline} />;
   } else {
@@ -446,7 +451,7 @@ export default function AuthApp({ route }: { route: string }) {
         offline={offline}
       >
         <section
-          className={`auth-card app-content-card${page === 'dashboard' || page === 'verified-ambulances' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
+          className={`auth-card app-content-card${page === 'dashboard' || page === 'blood-requests' || page === 'verified-ambulances' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
           aria-labelledby="page-title"
         >
           <h1 id="page-title">{t(...titles[page])}</h1>

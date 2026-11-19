@@ -75,6 +75,7 @@ public class SecurityConfig {
                     ).authenticated()
                 .requestMatchers("/api/v1/ambulance/**").hasRole("AMBULANCE_OPERATOR")
                 .requestMatchers("/api/v1/pharmacy/**").hasRole("PHARMACY_STAFF")
+                .requestMatchers("/api/v1/blood/requests", "/api/v1/blood/requests/**").authenticated()
                 .requestMatchers("/api/v1/blood/donor-profile").authenticated()
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint((req,res,ex) -> res.sendError(401)).accessDeniedHandler((req,res,ex) -> res.sendError(403)))

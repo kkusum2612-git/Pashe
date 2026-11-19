@@ -148,7 +148,7 @@ export default function AppLayout({
                 }
                 onClick={closeMenu}
               >
-                <AppIcon name={item.page} />
+                <AppIcon name={item.page === 'blood-requests' ? 'donor' : item.page} />
                 <span>{bn ? item.bn : item.en}</span>
               </a>
             ))}
