@@ -49,3 +49,8 @@ pashe:
 
 server:
   port: 8080
+
+# Request/response debug logging can expose coordinates, addresses and auth tokens.
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation: WARN

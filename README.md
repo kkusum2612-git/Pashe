@@ -1,5 +1,17 @@
 # Pashe
 
+## Care Circle and SOS presentation
+
+This branch adds consent-based Care Circle invitations and a self-SOS button with
+a cancellable ten-second countdown, guardian-visible incident status and optional
+location sharing. Open `http://localhost:5173/#/guardian` after signing in.
+
+Use `scripts/Start-Sos-Demo.ps1` to start the backend in its dedicated presentation
+schema, then run `npm.cmd run dev` in `frontend`. Existing database schemas are
+preserved. See the [setup and presentation guide](docs/care-circle-sos-demo.md).
+
+Run `scripts/Test-Guardian.ps1` for frontend/build/lint and isolated backend checks.
+
 ## PostgreSQL database
 
 PostgreSQL 17 runs locally through Docker Compose. Database settings are read from

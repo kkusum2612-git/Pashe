@@ -3,6 +3,10 @@ import { getNavigation } from './navigation';
 import AppIcon from './AppIcon';
 
 const descriptions: Record<string, [string, string]> = {
+  guardian: [
+    'Open SOS and manage your care circle.',
+    'SOS, কেয়ার সার্কেল পরিচালনা করুন।'
+  ],
   donor: [
     'Manage your blood donor information and availability.',
     'রক্তদাতার তথ্য এবং রক্তদানের প্রস্তুতি পরিচালনা করুন।'
@@ -61,7 +65,7 @@ export default function DashboardPage({ user, bn }: {
         {items.map(item => (
           <a
             key={item.page}
-            href={`#/auth/${item.page}`}
+            href={item.href ?? `#/auth/${item.page}`}
             className="app-service-card"
           >
             <span className="app-service-icon">

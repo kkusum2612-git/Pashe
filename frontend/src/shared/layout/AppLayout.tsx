@@ -139,7 +139,7 @@ export default function AppLayout({
             {items.map(item => (
               <a
                 key={item.page}
-                href={`#/auth/${item.page}`}
+                href={item.href ?? `#/auth/${item.page}`}
                 className={`app-nav-link${
                   activePage === item.page ? ' app-nav-active' : ''
                 }`}
