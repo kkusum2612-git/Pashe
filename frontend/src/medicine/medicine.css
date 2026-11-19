@@ -1,0 +1,86 @@
+.medicine-care {
+  display: grid;
+  gap: 16px;
+}
+
+.medicine-panel,
+.medicine-item {
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.medicine-item {
+  margin-top: 12px;
+}
+
+.medicine-fields {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.medicine-actions,
+.medicine-picker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 10px;
+}
+
+.medicine-picker button,
+.medicine-actions button {
+  padding: 8px 12px;
+}
+
+.medicine-picker button[aria-pressed='true'] {
+  background: #dbeafe;
+  border-color: #2563eb;
+}
+
+.medicine-prescription-image {
+  display: block;
+  max-width: min(100%, 650px);
+  margin-top: 12px;
+}
+
+.medicine-warning {
+  color: #854d0e;
+}
+
+.medicine-care select {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font: inherit;
+}
+
+.medicine-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.medicine-note {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.medicine-item button {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .medicine-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

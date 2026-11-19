@@ -27,6 +27,11 @@ export const navigationItems: NavigationItem[] = [
     bn: 'ড্যাশবোর্ড',
   },
   {
+    page: 'medicine',
+    en: 'Medicine Care',
+    bn: 'ওষুধ সেবা',
+  },
+  {
     page: 'donor',
     en: 'Blood Network',
     bn: 'রক্তদান নেটওয়ার্ক',

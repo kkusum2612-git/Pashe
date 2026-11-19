@@ -14,11 +14,11 @@ import DashboardPage from '../shared/layout/DashboardPage';
 import { workspaceRoles } from '../shared/layout/navigation';
 import { useLanguage } from '../shared/i18n/useLanguage';
 import type { LocalizedText } from '../shared/i18n/useLanguage';
+import MedicineCarePage from '../medicine/MedicineCarePage';
 
-type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'blood-requests' | 'dashboard' | 'verified-ambulances';
+type Page = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'profile' | 'admin' | 'ambulance' | 'pharmacy' | 'donor' | 'blood-requests' | 'dashboard' | 'verified-ambulances' | 'medicine';
 
-const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'blood-requests', 'dashboard', 'verified-ambulances'];
-
+const pages: Page[] = ['login', 'register', 'verify', 'forgot', 'reset', 'profile', 'admin', 'ambulance', 'pharmacy', 'donor', 'blood-requests', 'dashboard', 'verified-ambulances', 'medicine'];
 const rolePages: Partial<Record<Page, Role>> = workspaceRoles;
 
 const titles: Record<Page, LocalizedText> = {
@@ -35,6 +35,7 @@ const titles: Record<Page, LocalizedText> = {
   'blood-requests': ['Blood requests', '\u09b0\u0995\u09cd\u09a4\u09c7\u09b0 \u0985\u09a8\u09c1\u09b0\u09cb\u09a7'],
   dashboard: ['Dashboard', 'ড্যাশবোর্ড'],
   'verified-ambulances': ['Verified ambulances', 'যাচাইকৃত অ্যাম্বুলেন্স'],
+  medicine: ['Medicine Care', 'ওষুধ সেবা'],
 };
 
 const roleTitles: Record<Role, LocalizedText> = {
@@ -281,6 +282,7 @@ export default function AuthApp({ route }: { route: string }) {
     page === 'blood-requests' ||
     page === 'dashboard' ||
     page === 'verified-ambulances' ||
+    page === 'medicine' ||
     !!rolePages[page];
 
   let content: ReactNode;
@@ -312,7 +314,9 @@ export default function AuthApp({ route }: { route: string }) {
     content = <p>{t('Your role has been verified. Workspace features are coming soon.', 'আপনার ভূমিকা যাচাই হয়েছে। কর্মক্ষেত্রের সুবিধা শীঘ্রই আসছে।')}</p>;
   } else if (page === 'dashboard' && user) {
     content = <DashboardPage user={user} bn={bn} />;
-  } else if (page === 'blood-requests' && user) {
+  } else if (page === 'medicine' && user) {
+    content = <MedicineCarePage key={user.id} offline={offline} />;
+} else if (page === 'blood-requests' && user) {
     content = <BloodRequestPage key={user.id} bn={bn} offline={offline} />;
   } else if (page === 'donor' && user) {
     content = <DonorProfilePage key={user.id} bn={bn} offline={offline} />;
@@ -451,8 +455,7 @@ export default function AuthApp({ route }: { route: string }) {
         offline={offline}
       >
         <section
-          className={`auth-card app-content-card${page === 'dashboard' || page === 'blood-requests' || page === 'verified-ambulances' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
-          aria-labelledby="page-title"
+          className={`auth-card app-content-card${page === 'dashboard' || page === 'blood-requests' || page === 'verified-ambulances' || page === 'medicine' || !!rolePages[page] ? ' app-content-card-wide' : ''}`}
         >
           <h1 id="page-title">{t(...titles[page])}</h1>
           {feedback}
