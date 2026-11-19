@@ -77,6 +77,11 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/pharmacy/**").hasRole("PHARMACY_STAFF")
                 .requestMatchers("/api/v1/blood/requests", "/api/v1/blood/requests/**").authenticated()
                 .requestMatchers("/api/v1/blood/donor-profile").authenticated()
+                .requestMatchers("/api/v1/medicine/my-medicines","/api/v1/medicine/my-medicines/**").authenticated()
+                .requestMatchers("/api/v1/medicine/preferences", "/api/v1/medicine/prescriptions",
+                    "/api/v1/medicine/prescriptions/**", "/api/v1/medicine/safety/**").authenticated()
+                .requestMatchers(org.springframework.http.HttpMethod.GET,
+                    "/api/v1/medicine/catalog", "/api/v1/medicine/catalog/**", "/api/v1/medicine/schedule").authenticated()
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint((req,res,ex) -> res.sendError(401)).accessDeniedHandler((req,res,ex) -> res.sendError(403)))
             .oauth2ResourceServer(o -> o.bearerTokenResolver(req -> {
