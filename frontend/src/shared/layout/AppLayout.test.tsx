@@ -62,6 +62,7 @@ describe('shared application layout', () => {
     const { sidebar } = renderLayout();
 
     expect(within(sidebar).getByText('Dashboard')).toBeTruthy();
+    expect(within(sidebar).getByRole('link', { name: /Guardian SOS/ }).getAttribute('href')).toBe('#/guardian');
     expect(within(sidebar).getByText('Blood Network')).toBeTruthy();
     expect(within(sidebar).getByText('My Profile')).toBeTruthy();
 

@@ -73,6 +73,9 @@ function Landing() {
             {bn ? 'English' : 'বাংলা'}
           </button>
 
+          <a href="#/guardian">
+            {t('Guardian SOS', 'জরুরি সহায়তা')}
+          </a>
           <a href="#/auth/login">
             {t('Sign in', 'প্রবেশ করুন')}
           </a>

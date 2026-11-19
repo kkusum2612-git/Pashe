@@ -7,7 +7,7 @@ interface InstallEvent extends Event {
   userChoice: Promise<{ outcome: string }>;
 }
 
-export function PwaStatus() {
+export function PwaStatus({ suppressed = false }: { suppressed?: boolean }) {
   const { t } = useLanguage();
 
   const {
@@ -34,7 +34,7 @@ export function PwaStatus() {
     };
   }, []);
 
-  if (!refresh && !install) return null;
+  if (suppressed || (!refresh && !install)) return null;
 
   return (
     <aside

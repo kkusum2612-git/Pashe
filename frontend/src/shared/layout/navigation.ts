@@ -5,6 +5,7 @@ export interface NavigationItem {
   en: string;
   bn: string;
   role?: Role;
+  href?: string;
 }
 
 export const workspaceRoles = {
@@ -14,6 +15,12 @@ export const workspaceRoles = {
 } as const;
 
 export const navigationItems: NavigationItem[] = [
+  {
+    page: 'guardian',
+    en: 'Guardian SOS',
+    bn: 'জরুরি সহায়তা',
+    href: '#/guardian',
+  },
   {
     page: 'dashboard',
     en: 'Dashboard',
